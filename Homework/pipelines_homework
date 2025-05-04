@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Start Download') {
+            steps {
+                
+                build job: "download_homework"
+                
+            }
+        }
+        
+        stage ('Train') {
+            
+            steps {
+                
+                script {
+                    dir('C:\\Users\\user\\.jenkins\\workspace\\download_homework') {
+                        build job: "train_model_homework"
+                    }
+                }
+            
+            }
+        }
+        
+        stage ('Deploy') {
+            steps {
+                build job: 'deploy_homework'
+            }
+        }
+    }
+}
